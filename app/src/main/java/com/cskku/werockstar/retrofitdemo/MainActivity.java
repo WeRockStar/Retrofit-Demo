@@ -31,6 +31,7 @@ public class MainActivity extends AppCompatActivity {
     Button btnSearch;
     EditText edUser;
     RecyclerView recyclerUserList;
+    ProgressBar progressBar;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -40,6 +41,9 @@ public class MainActivity extends AppCompatActivity {
         btnSearch = (Button) findViewById(R.id.btnSearch);
         edUser = (EditText) findViewById(R.id.editUser);
         recyclerUserList = (RecyclerView) findViewById(R.id.gitList);
+        progressBar = (ProgressBar) findViewById(R.id.progressBar);
+
+        progressBar.setVisibility(View.INVISIBLE);
 
         recyclerUserList.setHasFixedSize(true);
         recyclerUserList.setLayoutManager(new LinearLayoutManager(MainActivity.this));
@@ -47,6 +51,8 @@ public class MainActivity extends AppCompatActivity {
         btnSearch.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                progressBar.setVisibility(View.VISIBLE);
+
                 String user = edUser.getText().toString();
 
                 RestAdapter adapter = new RestAdapter.Builder()
@@ -58,6 +64,8 @@ public class MainActivity extends AppCompatActivity {
                 git.getFeed(user, new Callback<Github>() {
                     @Override
                     public void success(Github githubs, Response response) {
+                        progressBar.setVisibility(View.INVISIBLE);
+
                         List<Github> list = new ArrayList<Github>();
                         list.add(githubs);
 
@@ -67,6 +75,8 @@ public class MainActivity extends AppCompatActivity {
 
                     @Override
                     public void failure(RetrofitError error) {
+                        progressBar.setVisibility(View.INVISIBLE);
+
                         Log.d("FAILURE", error.getMessage());
                     }
                 });
