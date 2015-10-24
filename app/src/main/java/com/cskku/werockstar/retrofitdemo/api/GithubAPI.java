@@ -2,6 +2,8 @@ package com.cskku.werockstar.retrofitdemo.api;
 
 import com.cskku.werockstar.retrofitdemo.model.Github;
 
+import java.util.List;
+
 import retrofit.Callback;
 import retrofit.http.GET;
 import retrofit.http.Part;

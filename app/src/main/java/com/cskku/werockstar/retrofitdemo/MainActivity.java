@@ -1,7 +1,10 @@
 package com.cskku.werockstar.retrofitdemo;
 
+import android.content.Context;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.support.v7.widget.LinearLayoutManager;
+import android.support.v7.widget.RecyclerView;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
@@ -9,39 +12,43 @@ import android.widget.EditText;
 import android.widget.ProgressBar;
 import android.widget.TextView;
 
+import com.cskku.werockstar.retrofitdemo.adapter.GithubAdapter;
 import com.cskku.werockstar.retrofitdemo.api.GithubAPI;
 import com.cskku.werockstar.retrofitdemo.model.Github;
+
+import java.util.ArrayList;
+import java.util.List;
 
 import retrofit.Callback;
 import retrofit.RestAdapter;
 import retrofit.RetrofitError;
 import retrofit.client.Response;
+import uk.co.chrisjenx.calligraphy.CalligraphyContextWrapper;
 
 public class MainActivity extends AppCompatActivity {
 
     private String BASE_URL = "https://api.github.com";
-    Button click;
-    TextView tv;
-    EditText edit_user;
-    ProgressBar pbar;
+    Button btnSearch;
+    EditText edUser;
+    RecyclerView recyclerUserList;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        click = (Button) findViewById(R.id.button);
-        tv = (TextView) findViewById(R.id.tv);
-        edit_user = (EditText) findViewById(R.id.edit);
-        pbar = (ProgressBar) findViewById(R.id.pb);
-        pbar.setVisibility(View.INVISIBLE);
+        btnSearch = (Button) findViewById(R.id.btnSearch);
+        edUser = (EditText) findViewById(R.id.editUser);
+        recyclerUserList = (RecyclerView) findViewById(R.id.gitList);
 
+        recyclerUserList.setHasFixedSize(true);
+        recyclerUserList.setLayoutManager(new LinearLayoutManager(MainActivity.this));
 
-        click.setOnClickListener(new View.OnClickListener() {
+        btnSearch.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                String user = edit_user.getText().toString();
-                pbar.setVisibility(View.VISIBLE);
+                String user = edUser.getText().toString();
+
                 RestAdapter adapter = new RestAdapter.Builder()
                         .setEndpoint(BASE_URL)
                         .build();
@@ -50,18 +57,25 @@ public class MainActivity extends AppCompatActivity {
 
                 git.getFeed(user, new Callback<Github>() {
                     @Override
-                    public void success(Github github, Response response) {
-                        tv.setText("Github name : "+github.getName() + "\nWebsits : "+github.getBlog() + "");
-                        pbar.setVisibility(View.INVISIBLE);
+                    public void success(Github githubs, Response response) {
+                        List<Github> list = new ArrayList<Github>();
+                        list.add(githubs);
+
+                        GithubAdapter githubAdapter = new GithubAdapter(list);
+                        recyclerUserList.setAdapter(githubAdapter);
                     }
 
                     @Override
                     public void failure(RetrofitError error) {
-                        pbar.setVisibility(View.INVISIBLE);
-                        Log.d("FAILURE" , error.getMessage());
+                        Log.d("FAILURE", error.getMessage());
                     }
                 });
             }
         });
+    }
+
+    @Override
+    protected void attachBaseContext(Context newBase) {
+        super.attachBaseContext(CalligraphyContextWrapper.wrap(newBase));
     }
 }
