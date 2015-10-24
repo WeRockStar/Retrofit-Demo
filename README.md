@@ -6,3 +6,5 @@ Coming soon Retrofit 2.0
     compile 'com.android.support:cardview-v7:23.1.0'
     compile 'com.github.bumptech.glide:glide:3.6.1'
 ```
+
+#### Screenshot
