@@ -8,3 +8,5 @@ Coming soon Retrofit 2.0
 ```
 
 #### Screenshot
+<img src="https://github.com/WeRockStar/Retrofit-Demo/blob/master/before.png" width="450">
+<img src="https://github.com/WeRockStar/Retrofit-Demo/blob/master/after.png" width="450">
