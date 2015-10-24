@@ -6,9 +6,6 @@ import com.cskku.werockstar.retrofitdemo.R;
 
 import uk.co.chrisjenx.calligraphy.CalligraphyConfig;
 
-/**
- * Created by Kotchaphan on 24/10/2558.
- */
 public class ApplicationFonts extends Application {
 
     @Override

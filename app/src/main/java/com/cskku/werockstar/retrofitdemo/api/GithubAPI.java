@@ -6,7 +6,6 @@ import java.util.List;
 
 import retrofit.Callback;
 import retrofit.http.GET;
-import retrofit.http.Part;
 import retrofit.http.Path;
 
 /**

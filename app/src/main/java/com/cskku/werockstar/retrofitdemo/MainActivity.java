@@ -10,7 +10,6 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ProgressBar;
-import android.widget.TextView;
 
 import com.cskku.werockstar.retrofitdemo.adapter.GithubAdapter;
 import com.cskku.werockstar.retrofitdemo.api.GithubAPI;
@@ -29,7 +28,7 @@ public class MainActivity extends AppCompatActivity {
 
     private String BASE_URL = "https://api.github.com";
     Button btnSearch;
-    EditText edUser;
+    EditText edtUser;
     RecyclerView recyclerUserList;
     ProgressBar progressBar;
 
@@ -39,7 +38,7 @@ public class MainActivity extends AppCompatActivity {
         setContentView(R.layout.activity_main);
 
         btnSearch = (Button) findViewById(R.id.btnSearch);
-        edUser = (EditText) findViewById(R.id.editUser);
+        edtUser = (EditText) findViewById(R.id.editUser);
         recyclerUserList = (RecyclerView) findViewById(R.id.gitList);
         progressBar = (ProgressBar) findViewById(R.id.progressBar);
 
@@ -53,7 +52,7 @@ public class MainActivity extends AppCompatActivity {
             public void onClick(View v) {
                 progressBar.setVisibility(View.VISIBLE);
 
-                String user = edUser.getText().toString();
+                String user = edtUser.getText().toString();
 
                 RestAdapter adapter = new RestAdapter.Builder()
                         .setEndpoint(BASE_URL)
@@ -71,12 +70,13 @@ public class MainActivity extends AppCompatActivity {
 
                         GithubAdapter githubAdapter = new GithubAdapter(list);
                         recyclerUserList.setAdapter(githubAdapter);
+
+                        edtUser.setText("");
                     }
 
                     @Override
                     public void failure(RetrofitError error) {
                         progressBar.setVisibility(View.INVISIBLE);
-
                         Log.d("FAILURE", error.getMessage());
                     }
                 });
