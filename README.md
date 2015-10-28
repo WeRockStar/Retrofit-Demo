@@ -1,4 +1,4 @@
-Coming soon Retrofit 2.0
+Retrofit 2.0 Now - https://github.com/WeRockStar/Retrofit2.0-Demo
 #### build.gradle
 ```java
     compile 'com.squareup.retrofit:retrofit:1.9.0'
